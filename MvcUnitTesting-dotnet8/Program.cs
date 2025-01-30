@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MvcUnitTesting_dotnet8.Models;
+using Tracker.WebAPIClient;
 
 namespace MvcUnitTesting_dotnet8
 {
@@ -26,6 +27,11 @@ namespace MvcUnitTesting_dotnet8
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            ActivityAPIClient.Track(StudentID: "S00237258", StudentName: "Samuel Ayres",
+                   activityName: "Rad302 2025 Week 2 Lab 1",
+                   Task: " Running Week 2 App");
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
