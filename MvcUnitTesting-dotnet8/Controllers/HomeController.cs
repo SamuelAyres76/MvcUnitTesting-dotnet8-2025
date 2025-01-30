@@ -19,12 +19,22 @@ namespace MvcUnitTesting_dotnet8.Controllers
             repository = bookRepo;
             _logger = logger;
         }
-        
-        public IActionResult Index(string v)
+
+        public IActionResult Index(string genre = null)
         {
+            ViewData["Genre"] = genre; // Store Genre in ViewData
+
             var books = repository.GetAll();
+
+            // If genre is provided, filter books by genre
+            if (!string.IsNullOrEmpty(genre))
+            {
+                books = books.Where(b => b.Genre == genre).ToList();
+            }
+
             return View(books);
         }
+
 
         public IActionResult Privacy()
         {
