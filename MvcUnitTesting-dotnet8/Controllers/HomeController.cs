@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MvcUnitTesting_dotnet8.Models;
 using System.Diagnostics;
+using Tracker.WebAPIClient;
 
 namespace MvcUnitTesting_dotnet8.Controllers
 {
@@ -11,11 +12,15 @@ namespace MvcUnitTesting_dotnet8.Controllers
 
         public HomeController(IRepository<Book> bookRepo, ILogger<HomeController> logger)
         {
+            ActivityAPIClient.Track(StudentID: "S00237258",
+                StudentName: "Samuel Ayres", activityName: "Rad302 2025 Week 2 Lab 1",
+                Task: "Running initial test");
+
             repository = bookRepo;
             _logger = logger;
         }
         
-        public IActionResult Index()
+        public IActionResult Index(string v)
         {
             var books = repository.GetAll();
             return View(books);

@@ -25,7 +25,7 @@ namespace MvcUnitTesting.Tests.Controllers
 
             //Act
             HomeController controller = new HomeController(bookRepository,null);
-            ViewResult viewResult = controller.Index() as ViewResult;
+            ViewResult viewResult = controller.Index(null) as ViewResult;
             var model = viewResult.Model as IEnumerable<Book>;
 
             //Assert
@@ -48,6 +48,21 @@ namespace MvcUnitTesting.Tests.Controllers
             Assert.AreEqual("Your Privacy is our concern", result.ViewData["Message"]);
         }
 
-       
+        // Failing Test
+        [TestMethod]
+        public void Index_Should_Set_ViewData_Genre()
+        {
+            // Arrange
+            var bookRepository = Mock.Create<IRepository<Book>>();
+            HomeController controller = new HomeController(bookRepository, null);
+
+            // Act
+            ViewResult viewResult = controller.Index("Fiction") as ViewResult;
+
+            // Assert - Expect ViewData to contain the "Genre" key
+            Assert.IsTrue(viewResult.ViewData.ContainsKey("Genre"), "ViewData does not contain 'Genre'");
+            Assert.AreEqual("Fiction", viewResult.ViewData["Genre"], "Genre value is incorrect");
+        }
+
     }
 }
